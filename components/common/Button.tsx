@@ -15,10 +15,10 @@ export interface ButtonProps extends Omit<ButtonAttributes, "type"> {
   isLoading?: boolean;
 }
 
-const Button = ({ type, size, label, icon, isLoading, ...attr }: ButtonProps) => {
+const Button = ({ type, size, label, icon, isLoading = false, ...attr }: ButtonProps) => {
   return (
     <BaseButton type={type} size={size} {...attr}>
-      <LabelWrapper isVisible={!!isLoading}>
+      <LabelWrapper $visible={!isLoading}>
         {icon && renderIconWithProps({ icon, size })}
         {label && <Label>{label}</Label>}
       </LabelWrapper>
@@ -105,11 +105,11 @@ const BaseButton = styled.button<{ type: Type; size: Size }>`
   ${labelSize}
 `;
 
-const LabelWrapper = styled.div<{ isVisible: boolean }>`
+const LabelWrapper = styled.div<{ $visible: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  visibility: ${({ isVisible }) => (isVisible ? "hidden" : "auto")};
+  visibility: ${({ $visible }) => ($visible ? "visible" : "hidden")};
 `;
 
 const Label = styled.p``;

@@ -6,13 +6,7 @@ import { styled } from "styled-components";
 import Input from "@/components/common/Input";
 import GptLogoIcon from "@/components/icon/GptLogoIcon";
 import Controller from "@/components/main/Controller";
-
-export const enum NamingCase {
-  CamelCase = "camelCase",
-  SnakeCase = "snake_case",
-  PascalCase = "PascalCase",
-  KebabCase = "kebab-case",
-}
+import { NamingCase } from "@/type";
 
 const Main = () => {
   const [value, setValue] = useState("");

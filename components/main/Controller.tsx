@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 import Button from "../common/Button";
 
-import { NamingCase } from "@/app/page";
+import { NamingCase } from "@/type";
 
 interface Props {
   isVariable: boolean;

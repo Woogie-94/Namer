@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { styled } from "styled-components";
 
+import Input from "@/components/common/Input";
+import GptLogoIcon from "@/components/icon/GptLogoIcon";
 import Controller from "@/components/main/Controller";
 
 export const enum NamingCase {
@@ -13,8 +15,13 @@ export const enum NamingCase {
 }
 
 const Main = () => {
+  const [value, setValue] = useState("");
   const [isVariable, setIsVariable] = useState(true);
   const [namingCase, setNamingCase] = useState<NamingCase>(NamingCase.CamelCase);
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
 
   const handleIdentifierTypeChange = (value: boolean) => {
     setIsVariable(value);
@@ -32,6 +39,14 @@ const Main = () => {
           onIdentifierTypeChange={handleIdentifierTypeChange}
           onNamingCaseChange={handleNamingCaseChange}
         />
+
+        <form>
+          <Input
+            value={value}
+            onChange={handleChange}
+            buttonProps={{ type: "primary", size: "medium", icon: <GptLogoIcon /> }}
+          />
+        </form>
       </Inner>
     </Wrapper>
   );

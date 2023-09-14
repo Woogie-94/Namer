@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import GlobalProvider from "@/lib/GlobalProvider";
 import StyledComponentsRegistry from "@/lib/styledRegistry";
 import GlobalStyle from "@/styles/globalStyle";
 
@@ -14,10 +15,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="kr">
       <body className={inter.className}>
-        <StyledComponentsRegistry>
-          {children}
-          <GlobalStyle />
-        </StyledComponentsRegistry>
+        <GlobalProvider>
+          <StyledComponentsRegistry>
+            {children}
+            <GlobalStyle />
+          </StyledComponentsRegistry>
+        </GlobalProvider>
       </body>
     </html>
   );

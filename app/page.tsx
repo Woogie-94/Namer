@@ -1,17 +1,25 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { styled } from "styled-components";
 
 import Input from "@/components/common/Input";
 import GptLogoIcon from "@/components/icon/GptLogoIcon";
 import Controller from "@/components/main/Controller";
+import useRecommendMutation from "@/queries/useRecommendMutation";
 import { NamingCase } from "@/type";
 
 const Main = () => {
   const [value, setValue] = useState("");
   const [isVariable, setIsVariable] = useState(true);
   const [namingCase, setNamingCase] = useState<NamingCase>(NamingCase.CamelCase);
+
+  const { mutateAsync, isLoading } = useRecommendMutation();
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    mutateAsync({ value, isVariable, namingCase });
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
@@ -34,11 +42,11 @@ const Main = () => {
           onNamingCaseChange={handleNamingCaseChange}
         />
 
-        <form>
+        <form onSubmit={handleSubmit}>
           <Input
             value={value}
             onChange={handleChange}
-            buttonProps={{ type: "primary", size: "medium", icon: <GptLogoIcon /> }}
+            buttonProps={{ type: "primary", size: "medium", icon: <GptLogoIcon />, isLoading }}
           />
         </form>
       </Inner>

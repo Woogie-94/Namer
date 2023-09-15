@@ -35,7 +35,7 @@ class HttpClient {
     return this.client.delete<T>(url, config);
   }
 
-  isHttpError(error: unknown): error is AxiosError {
+  isHttpError<T>(error: unknown): error is AxiosError<T> {
     return this.rawClient.isAxiosError(error);
   }
 

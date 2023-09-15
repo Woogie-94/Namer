@@ -67,6 +67,7 @@ const Main = () => {
         <form onSubmit={handleSubmit}>
           <Input
             value={value}
+            placeholder={isVariable ? "고민되는 변수명을 설명해보세요" : "고민되는 함수명을 설명해보세요"}
             onChange={handleChange}
             buttonProps={{ type: "primary", size: "medium", icon: <GptLogoIcon />, isLoading }}
           />

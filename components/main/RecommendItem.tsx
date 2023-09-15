@@ -3,6 +3,7 @@ import { styled } from "styled-components";
 import Button from "../common/Button";
 import StarIcon from "../icon/StarIcon";
 
+import useToast from "@/hooks/useToast";
 import { Recommend } from "@/queries/useRecommendMutation";
 import { typo_32_bold } from "@/styles/typo";
 
@@ -10,6 +11,14 @@ interface Props {
   recommend: Recommend;
 }
 const RecommendItem = ({ recommend }: Props) => {
+  const { show } = useToast();
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text).then(() => {
+      show({ message: "복사되었습니다." });
+    });
+  };
+
   return (
     <RecommendWrapper key={recommend.name}>
       <LeftWrapper>
@@ -20,7 +29,7 @@ const RecommendItem = ({ recommend }: Props) => {
           ))}
         </ScoreWrapper>
       </LeftWrapper>
-      <Button type="primary" size="small" label="Copy" />
+      <Button type="primary" size="small" label="Copy" onClick={() => handleCopy(recommend.name)} />
     </RecommendWrapper>
   );
 };

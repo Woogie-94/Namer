@@ -5,16 +5,19 @@ import StarIcon from "../icon/StarIcon";
 
 import useToast from "@/hooks/useToast";
 import { Recommend } from "@/queries/useRecommendMutation";
+import trackingService from "@/services/trackingService";
 import { typo_32_bold } from "@/styles/typo";
 
 interface Props {
   recommend: Recommend;
+  index: number;
 }
-const RecommendItem = ({ recommend }: Props) => {
+const RecommendItem = ({ recommend, index }: Props) => {
   const { show } = useToast();
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text).then(() => {
+      trackingService.event("recommend_copy", { index });
       show({ message: "복사되었습니다." });
     });
   };

@@ -10,6 +10,7 @@ import Controller from "@/components/main/Controller";
 import RecommendItem from "@/components/main/RecommendItem";
 import useShowToastOnError from "@/hooks/useShowToastOnError";
 import useRecommendMutation from "@/queries/useRecommendMutation";
+import trackingService from "@/services/trackingService";
 import { NamingCase } from "@/type";
 
 const Main = () => {
@@ -22,7 +23,24 @@ const Main = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutateAsync({ value, isVariable, namingCase });
+
+    trackingService.event("recommend_click", {
+      q_value: value,
+      q_type: isVariable ? "variable" : "function",
+      q_case: namingCase,
+    });
+
+    mutateAsync({ value, isVariable, namingCase })
+      .then(() => {
+        trackingService.event("recommend_success");
+      })
+      .catch(error => {
+        trackingService.event("추천_실패", {
+          error_statue: error.response?.status,
+          error_message: error.response?.data.message,
+          error_type: error.response?.data.type,
+        });
+      });
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +73,10 @@ const Main = () => {
         </form>
 
         <RecommendWrapper>
-          {!isLoading && recommendList?.map(recommend => <RecommendItem key={recommend.name} recommend={recommend} />)}
+          {!isLoading &&
+            recommendList?.map((recommend, index) => (
+              <RecommendItem key={recommend.name} recommend={recommend} index={index} />
+            ))}
         </RecommendWrapper>
       </Inner>
 

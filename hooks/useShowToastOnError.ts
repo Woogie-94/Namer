@@ -20,6 +20,10 @@ const useShowToastOnError = () => {
         }
       }
     });
+
+    return () => {
+      emitter.off("error", () => {});
+    };
   }, [show]);
 };
 

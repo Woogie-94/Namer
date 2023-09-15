@@ -4,12 +4,15 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { styled } from "styled-components";
 
 import Input from "@/components/common/Input";
+import Toast from "@/components/common/Toast";
 import GptLogoIcon from "@/components/icon/GptLogoIcon";
 import Controller from "@/components/main/Controller";
+import useShowToastOnError from "@/hooks/useShowToastOnError";
 import useRecommendMutation from "@/queries/useRecommendMutation";
 import { NamingCase } from "@/type";
 
 const Main = () => {
+  useShowToastOnError();
   const [value, setValue] = useState("");
   const [isVariable, setIsVariable] = useState(true);
   const [namingCase, setNamingCase] = useState<NamingCase>(NamingCase.CamelCase);
@@ -50,6 +53,8 @@ const Main = () => {
           />
         </form>
       </Inner>
+
+      <Toast />
     </Wrapper>
   );
 };

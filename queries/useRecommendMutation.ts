@@ -1,6 +1,7 @@
-import axios from "axios";
 import type OpenAI from "openai";
 import { useMutation } from "react-query";
+
+import { httpClient } from "@/services/ServiceProvider";
 
 interface Params {
   value: string;
@@ -9,7 +10,7 @@ interface Params {
 }
 
 const request = async ({ value, namingCase, isVariable }: Params) => {
-  const { data } = await axios.post<OpenAI.Completion>("/api/recommend", {
+  const { data } = await httpClient.post<OpenAI.Completion>("/api/recommend", {
     message: value,
     namingCase,
     type: isVariable ? "variable" : "function",

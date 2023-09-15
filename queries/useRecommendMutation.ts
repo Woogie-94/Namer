@@ -3,6 +3,15 @@ import { useMutation } from "react-query";
 
 import { httpClient } from "@/services/ServiceProvider";
 
+export interface Recommend {
+  name: string;
+  score: number;
+}
+
+interface RecommendList {
+  result: Array<Recommend>;
+}
+
 interface Params {
   value: string;
   namingCase: string;
@@ -15,12 +24,14 @@ const request = async ({ value, namingCase, isVariable }: Params) => {
     namingCase,
     type: isVariable ? "variable" : "function",
   });
-
-  return data;
+  const parseRcommendList = JSON.parse(data.choices[0].message.content) as RecommendList;
+  return { data, recommendList: parseRcommendList.result };
 };
 
 const useRecommendMutation = () => {
-  return useMutation({ mutationFn: request });
+  const mutation = useMutation({ mutationFn: request });
+
+  return { ...mutation, data: mutation.data?.data, recommendList: mutation.data?.recommendList };
 };
 
 export default useRecommendMutation;

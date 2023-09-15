@@ -7,6 +7,7 @@ import Input from "@/components/common/Input";
 import Toast from "@/components/common/Toast";
 import GptLogoIcon from "@/components/icon/GptLogoIcon";
 import Controller from "@/components/main/Controller";
+import RecommendItem from "@/components/main/RecommendItem";
 import useShowToastOnError from "@/hooks/useShowToastOnError";
 import useRecommendMutation from "@/queries/useRecommendMutation";
 import { NamingCase } from "@/type";
@@ -17,7 +18,7 @@ const Main = () => {
   const [isVariable, setIsVariable] = useState(true);
   const [namingCase, setNamingCase] = useState<NamingCase>(NamingCase.CamelCase);
 
-  const { mutateAsync, isLoading } = useRecommendMutation();
+  const { recommendList, mutateAsync, isLoading } = useRecommendMutation();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -52,6 +53,10 @@ const Main = () => {
             buttonProps={{ type: "primary", size: "medium", icon: <GptLogoIcon />, isLoading }}
           />
         </form>
+
+        <RecommendWrapper>
+          {!isLoading && recommendList?.map(recommend => <RecommendItem key={recommend.name} recommend={recommend} />)}
+        </RecommendWrapper>
       </Inner>
 
       <Toast />
@@ -75,4 +80,8 @@ const Inner = styled.div`
   width: 100%;
   max-width: 592px;
   padding: 0 16px;
+`;
+
+const RecommendWrapper = styled.div`
+  margin-top: 16px;
 `;

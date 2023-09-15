@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
 
 import GlobalProvider from "@/lib/GlobalProvider";
+import GoogleAnalytics from "@/lib/GoogleAnalytics";
 import StyledComponentsRegistry from "@/lib/styledRegistry";
 import ServiceProvider from "@/services/ServiceProvider";
 import GlobalStyle from "@/styles/globalStyle";
@@ -27,6 +29,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </StyledComponentsRegistry>
           </GlobalProvider>
         </ServiceProvider>
+
+        <Suspense>
+          <GoogleAnalytics />
+        </Suspense>
       </body>
     </html>
   );

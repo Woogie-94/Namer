@@ -32,7 +32,7 @@ export async function POST(req: Request, res: Response) {
   const headers = new Headers(res.headers);
 
   const body = {
-    model: "gpt-3.5-turbo",
+    model: "gpt-4",
     messages: [
       {
         role: "system",
@@ -81,7 +81,7 @@ const getVariablePrompt = (namingCase: NamingCase) => {
   4. Answer in JSON like <answer>
   </instructions>
   <answer>
-  {result:[{name:"",score: 0~5}]}
+  {"result":[{"name":"","score": 0~5}]}
   </answer>`;
 };
 
@@ -94,6 +94,6 @@ const getFuctionPrompt = (namingCase: NamingCase) => {
   5. Answer in JSON like <answer>
   </instructions>
   <answer>
-  {result:[{name:"",score: 0~5}]}
+  {"result":[{"name":"","score": 0~5}]}
   </answer>`;
 };

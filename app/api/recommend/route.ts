@@ -32,7 +32,7 @@ export async function POST(req: Request, res: Response) {
   const headers = new Headers(res.headers);
 
   const body = {
-    model: "gpt-4",
+    model: "gpt-4o-mini",
     messages: [
       {
         role: "system",
